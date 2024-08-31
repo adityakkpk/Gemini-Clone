@@ -9,6 +9,7 @@ import {
   send,
 } from "../../assets/index.js";
 import { Context } from "../../Context/Context.jsx";
+import "./Main.css"
 
 const Main = () => {
   const { onSent, recentPrompt, showRes, loading, resData, setInput, input } =
@@ -80,10 +81,14 @@ const Main = () => {
             </div>
           </>
         ) : (
-          <div className='result'>
-            <div className="result-title">
-              <img src="src\assets\user.png" alt="" />
-              <p></p>
+          <div className='result px-[5%] max-h-[70vh] overflow-y-scroll'>
+            <div className="result-title flex my-10 mx-0 items-center gap-5">
+              <img src="src\assets\user.png" alt="" className="w-10 rounded-full" />
+              <p>{recentPrompt}</p>
+            </div>
+            <div className="result-data flex items-start gap-5">
+              <img src="src\assets\google-gemini-icon.png" alt="" className="w-8 rounded-full" />
+              <p dangerouslySetInnerHTML={{__html:resData}}></p>
             </div>
           </div>
         )}
