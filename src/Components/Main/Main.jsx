@@ -9,7 +9,7 @@ import {
   send,
 } from "../../assets/index.js";
 import { Context } from "../../Context/Context.jsx";
-import "./Main.css"
+import "./Main.css";
 
 const Main = () => {
   const { onSent, recentPrompt, showRes, loading, resData, setInput, input } =
@@ -81,14 +81,32 @@ const Main = () => {
             </div>
           </>
         ) : (
-          <div className='result px-[5%] max-h-[70vh] overflow-y-scroll'>
-            <div className="result-title flex my-10 mx-0 items-center gap-5">
-              <img src="src\assets\user.png" alt="" className="w-10 rounded-full" />
-              <p>{recentPrompt}</p>
+          <div className="w-full result px-[5%] max-h-[70vh] overflow-y-scroll">
+            <div className="w-full result-title flex my-10 mx-0 items-center gap-5">
+              <img
+                src="src\assets\user.png"
+                alt=""
+                className="w-10 rounded-full"
+              />
+              <p className="text-xl font-light">{recentPrompt}</p>
             </div>
-            <div className="result-data flex items-start gap-5">
-              <img src="src\assets\google-gemini-icon.png" alt="" className="w-8 rounded-full" />
-              <p dangerouslySetInnerHTML={{__html:resData}}></p>
+            <div className="w-full result-data flex items-start gap-7">
+              <img
+                src="src\assets\google-gemini-icon.png"
+                alt=""
+                className="w-8 rounded-full"
+              />
+              {loading ? (
+                <div className="w-full flex gap-3 flex-col">
+                  <hr className="rounded-md border-none bg-[#f6f7f8] bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] h-5 bg-contain animate-loader" />
+                  <hr className="rounded-md border-none bg-[#f6f7f8] bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] h-5 bg-contain animate-loader" />
+                  <hr className="rounded-md border-none bg-[#f6f7f8] bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] h-5 bg-contain animate-loader" />
+                </div>
+              ) : (
+                <>
+                  <p dangerouslySetInnerHTML={{ __html: resData }} className="text-xl font-light"></p>
+                </>
+              )}
             </div>
           </div>
         )}

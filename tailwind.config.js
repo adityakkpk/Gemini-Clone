@@ -5,7 +5,17 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes : {
+        loader : {
+          "0%" : { backgroundPosition: "-800px 0px" },
+          "100%" : { backgroundPosition: "800px 0px" }
+        }
+      },
+      animation: {
+        "loader" : "loader 3s infinite linear"
+      }
+    },
   },
   plugins: [],
 }
