@@ -26,7 +26,7 @@ const Main = () => {
       <nav className="flex items-center justify-between p-5 text-xl text-[#585858]">
         <p>Gemini</p>
         <img
-          src="src\assets\user.png"
+          src="src/assets/user.png"
           className="rounded-full"
           width={`40px`}
         />
@@ -98,7 +98,7 @@ const Main = () => {
             </div>
             <div className="w-full result-data flex items-start gap-7">
               <img
-                src="src\assets\google-gemini-icon.png"
+                src="src/assets/google-gemini-icon.png"
                 alt=""
                 className="w-8 rounded-full"
               />
