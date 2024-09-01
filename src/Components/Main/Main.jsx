@@ -15,6 +15,12 @@ const Main = () => {
   const { onSent, recentPrompt, showRes, loading, resData, setInput, input } =
     useContext(Context);
 
+    const handleEnterPress = (e) => {
+      if(e.key === 'Enter') {
+        onSent();
+      }
+    }
+
   return (
     <div className="flex-1 min-h-lvh pb-[15vh] relative">
       <nav className="flex items-center justify-between p-5 text-xl text-[#585858]">
@@ -29,7 +35,7 @@ const Main = () => {
       <div className="max-w-5xl flex flex-col justify-center items-center m-auto">
         {!showRes ? (
           <>
-            <div className="my-12 text-6xl text-[#c4c7c5] font-medium p-5">
+            <div className="my-10 md:text-6xl text-4xl text-[#c4c7c5] font-medium p-5">
               <p>
                 <span className="bg-gradient-to-r from-[#4b90ff] to-[#ff5546] bg-clip-text text-transparent">
                   Hello, Developer.
@@ -37,8 +43,8 @@ const Main = () => {
               </p>
               <p>How can I help you today?</p>
             </div>
-            <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(200px,1fr))] w-full p-5">
-              <div className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
+            <div className="hidden sm:grid gap-4 grid-cols-[repeat(auto-fill,minmax(200px,1fr))] w-full p-5">
+              <div onClick={() => setInput("Suggest beautiful places to see on an upcoming road trip")} className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
                 <p className="text-[#585858] text-lg">
                   Suggest beautiful places to see on an upcoming road trip
                 </p>
@@ -48,7 +54,7 @@ const Main = () => {
                   className="w-9 p-1 absolute bg-white rounded-3xl bottom-3 right-3"
                 />
               </div>
-              <div className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
+              <div onClick={() => setInput("Briefly summarize this concept: urban planning")} className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
                 <p className="text-[#585858] text-lg">
                   Briefly summarize this concept: urban planning
                 </p>
@@ -58,7 +64,7 @@ const Main = () => {
                   className="w-9 p-1 absolute bg-white rounded-3xl bottom-3 right-3"
                 />
               </div>
-              <div className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
+              <div onClick={() => setInput("Brainstorm team bonding activities for our work retreat")} className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
                 <p className="text-[#585858] text-lg">
                   Brainstorm team bonding activities for our work retreat
                 </p>
@@ -68,7 +74,7 @@ const Main = () => {
                   className="w-9 p-1 absolute bg-white rounded-3xl bottom-3 right-3"
                 />
               </div>
-              <div className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
+              <div onClick={() => setInput("Tell me about React js and React native")} className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
                 <p className="text-[#585858] text-lg">
                   Tell me about React js and React native
                 </p>
@@ -111,27 +117,27 @@ const Main = () => {
           </div>
         )}
 
-        <div className="main-bottom absolute bottom-0 w-lvh max-w=[900x] p-5 m-auto">
+        <div className="main-bottom absolute bottom-0 w-lvh max-w-[900px] p-5 m-auto">
           <div className="flex items-center justify-between gap-5 bg-[#f0f4f9] py-2 px-5 rounded-full">
             <input
               type="text"
               placeholder="Enter a prompt here"
-              className="flex-1 bg-transparent outline-none border-none p-2 text-lg"
+              className="flex-1 bg-transparent outline-none border-none md:p-2 md:text-lg p-0 text-sm"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => handleEnterPress(e)}
             />
             <div className="flex items-center gap-4 justify-center">
-              <img src={gallery} alt="" className="w-6 cursor-pointer" />
-              <img src={mic} alt="" className="w-6 cursor-pointer" />
-              <img
+              <img src={gallery} className="md:w-6 w-4 cursor-pointer" />
+              <img src={mic} className="md:w-6 w-4 cursor-pointer" />
+              {input?<img
                 src={send}
-                alt=""
-                className="w-6 cursor-pointer"
+                className="md:w-6 w-4 cursor-pointer"
                 onClick={() => onSent()}
-              />
+              />:null}
             </div>
           </div>
-          <p className="text-sm my-4 mx-auto text-center font-light">
+          <p className="text-xs md:text-sm mt-4 mx-auto text-center md:font-light font-extralight">
             Gemini may display inaccurate info, including about people, so
             double-check its responses. Your privacy and Gemini Apps
           </p>

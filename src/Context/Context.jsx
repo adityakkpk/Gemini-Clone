@@ -18,6 +18,11 @@ const ContextProvider = (props) => {
       }, 75*index);
     }
 
+    const newChat = () => {
+      setLoading(false);
+      setShowRes(false);
+    }
+
     const onSent = async (prompt) => {
 
         setResData("");
@@ -39,7 +44,7 @@ const ContextProvider = (props) => {
         let newResponse = "";
         for(let i = 0; i < responseArray.length; i++) {
           if(i === 0 || i%2 !== 1) {
-            newResponse += "</br>" + responseArray[i];
+            newResponse += responseArray[i];
           } else {
             newResponse += "</br><b>"+ responseArray[i]  +"</b>";
           }
@@ -67,6 +72,7 @@ const ContextProvider = (props) => {
     resData,
     input,
     setInput,
+    newChat
   };
 
   return (

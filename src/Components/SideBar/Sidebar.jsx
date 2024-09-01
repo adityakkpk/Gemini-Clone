@@ -11,7 +11,7 @@ import { Context } from "../../Context/Context";
 
 const Sidebar = () => {
   const [extended, setExtended] = useState(false);
-  const { onSent, prevPrompts, setRecentPrompt } = useContext(Context);
+  const { onSent, prevPrompts, setRecentPrompt, newChat } = useContext(Context);
 
   const loadPrompt = async (prompt) => {
     setRecentPrompt(prompt);
@@ -19,7 +19,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="min-h-lvh inline-flex flex-col justify-between bg-[#f0f0f9] py-[25px] px-[12px] duration-200">
+    <div className="min-h-lvh hidden sm:inline-flex flex-col justify-between bg-[#f0f0f9] py-[25px] px-[12px] duration-200">
       <div>
         <img
           src={menuSVG}
@@ -27,12 +27,12 @@ const Sidebar = () => {
           className="w-[20px] block ml-[10px] cursor-pointer"
           alt="menu-icon"
         />
-        <div className="mt-12 inline-flex items-center gap-3 py-3 px-4 bg-[#e6eaf1] rounded-full text-sm text-gray-600 cursor-pointer">
+        <div onClick={() => newChat()} className="mt-12 inline-flex items-center gap-3 py-3 px-4 bg-[#e6eaf1] rounded-full text-sm text-gray-600 cursor-pointer">
           <img src={plusSVG} className="w-[20px]" alt="new-chat-icon" />
           {extended ? <p>New Chat</p> : null}
         </div>
         {extended ? (
-          <div className="flex flex-col">
+          <div className="flex flex-col animate-fadeIn">
             <p className="mt-8 mb-8">Recent</p>
             {prevPrompts.map((item, index) => {
               return (
