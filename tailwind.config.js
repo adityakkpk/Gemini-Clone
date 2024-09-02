@@ -17,7 +17,7 @@ export default {
         }
       },
       animation: {
-        "loader" : "loader 3s infinite linear",
+        "loader" : "loader 5s infinite linear",
         "fadeIn" : "fadeIn 1.5s"
       }
     },

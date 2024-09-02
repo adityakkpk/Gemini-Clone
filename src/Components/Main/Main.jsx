@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import {
   code,
   compass,
@@ -15,21 +15,28 @@ const Main = () => {
   const { onSent, recentPrompt, showRes, loading, resData, setInput, input } =
     useContext(Context);
 
-    const handleEnterPress = (e) => {
-      if(e.key === 'Enter') {
-        onSent();
-      }
+  const handleEnterPress = (e) => {
+    if (e.key === "Enter") {
+      onSent();
     }
+  };
+
+  const responseContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (responseContainerRef.current) {
+      responseContainerRef.current.scrollTop = responseContainerRef.current.scrollHeight;
+      // console.log(responseContainerRef.current.scrollHeight);
+    }
+  }, [resData]);
+  // console.log(resData);
+  
 
   return (
     <div className="flex-1 min-h-lvh pb-[15vh] relative">
-      <nav className="flex items-center justify-between p-5 text-xl text-[#585858]">
-        <p>Gemini</p>
-        <img
-          src="/user.png"
-          className="rounded-full"
-          width={`40px`}
-        />
+      <nav className="flex items-center justify-between p-5 text-2xl text-[#585858]">
+        <p className="bg-gradient-to-r from-[#4b90ff] to-[#6546ff] bg-clip-text text-transparent">Gemini</p>
+        <img src="/user.png" className="rounded-full" width={`40px`} />
       </nav>
 
       <div className="max-w-5xl flex flex-col justify-center items-center m-auto">
@@ -43,8 +50,15 @@ const Main = () => {
               </p>
               <p>How can I help you today?</p>
             </div>
-            <div className="hidden sm:grid gap-4 grid-cols-[repeat(auto-fill,minmax(200px,1fr))] w-full p-5">
-              <div onClick={() => setInput("Suggest beautiful places to see on an upcoming road trip")} className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
+            <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(200px,1fr))] w-full p-5 mb-10">
+              <div
+                onClick={() =>
+                  setInput(
+                    "Suggest beautiful places to see on an upcoming road trip"
+                  )
+                }
+                className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200"
+              >
                 <p className="text-[#585858] text-lg">
                   Suggest beautiful places to see on an upcoming road trip
                 </p>
@@ -54,7 +68,12 @@ const Main = () => {
                   className="w-9 p-1 absolute bg-white rounded-3xl bottom-3 right-3"
                 />
               </div>
-              <div onClick={() => setInput("Briefly summarize this concept: urban planning")} className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
+              <div
+                onClick={() =>
+                  setInput("Briefly summarize this concept: urban planning")
+                }
+                className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200"
+              >
                 <p className="text-[#585858] text-lg">
                   Briefly summarize this concept: urban planning
                 </p>
@@ -64,7 +83,14 @@ const Main = () => {
                   className="w-9 p-1 absolute bg-white rounded-3xl bottom-3 right-3"
                 />
               </div>
-              <div onClick={() => setInput("Brainstorm team bonding activities for our work retreat")} className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
+              <div
+                onClick={() =>
+                  setInput(
+                    "Brainstorm team bonding activities for our work retreat"
+                  )
+                }
+                className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200"
+              >
                 <p className="text-[#585858] text-lg">
                   Brainstorm team bonding activities for our work retreat
                 </p>
@@ -74,7 +100,12 @@ const Main = () => {
                   className="w-9 p-1 absolute bg-white rounded-3xl bottom-3 right-3"
                 />
               </div>
-              <div onClick={() => setInput("Tell me about React js and React native")} className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200">
+              <div
+                onClick={() =>
+                  setInput("Tell me about React js and React native")
+                }
+                className="h-[200px] p-4 bg-[#f0f4f9] rounded-xl relative cursor-pointer hover:bg-[#dfe4ea] duration-200"
+              >
                 <p className="text-[#585858] text-lg">
                   Tell me about React js and React native
                 </p>
@@ -89,11 +120,7 @@ const Main = () => {
         ) : (
           <div className="w-full result px-[5%] max-h-[70vh] overflow-y-scroll">
             <div className="w-full result-title flex my-10 mx-0 items-center gap-5">
-              <img
-                src="user.png"
-                alt=""
-                className="w-10 rounded-full"
-              />
+              <img src="user.png" alt="" className="w-10 rounded-full" />
               <p className="text-xl font-light">{recentPrompt}</p>
             </div>
             <div className="w-full result-data flex items-start gap-7">
@@ -110,31 +137,37 @@ const Main = () => {
                 </div>
               ) : (
                 <>
-                  <p dangerouslySetInnerHTML={{ __html: resData }} className="text-xl font-light"></p>
+                  <p
+                    ref={responseContainerRef}
+                    dangerouslySetInnerHTML={{ __html: resData }}
+                    className="text-xl font-light"
+                  ></p>
                 </>
               )}
             </div>
           </div>
         )}
 
-        <div className="main-bottom absolute bottom-0 w-lvh max-w-[900px] p-5 m-auto">
-          <div className="flex items-center justify-between gap-5 bg-[#f0f4f9] py-2 px-5 rounded-full">
+        <div className="main-bottom fixed bg-white bottom-0 w-lvh max-w-[900px] p-5 pt-0 m-auto">
+          <div className="flex items-center justify-between gap-4 bg-[#f0f4f9] py-2 sm:px-5 px-3 rounded-full">
             <input
               type="text"
               placeholder="Enter a prompt here"
-              className="flex-1 bg-transparent outline-none border-none md:p-2 md:text-lg p-0 text-sm"
+              className="flex-1 bg-transparent outline-none border-none p-2 text-lg"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => handleEnterPress(e)}
             />
-            <div className="flex items-center gap-4 justify-center">
-              <img src={gallery} className="md:w-6 w-4 cursor-pointer" />
-              <img src={mic} className="md:w-6 w-4 cursor-pointer" />
-              {input?<img
-                src={send}
-                className="md:w-6 w-4 cursor-pointer"
-                onClick={() => onSent()}
-              />:null}
+            <div className="flex items-center sm:gap-4 gap-2 justify-center">
+              <img src={gallery} className="md:w-6 w-5 cursor-pointer" />
+              <img src={mic} className="md:w-6 w-5 cursor-pointer" />
+              {input ? (
+                <img
+                  src={send}
+                  className="md:w-6 w-5 mr-4 cursor-pointer"
+                  onClick={() => onSent()}
+                />
+              ) : null}
             </div>
           </div>
           <p className="text-xs md:text-sm mt-4 mx-auto text-center md:font-light font-extralight">
